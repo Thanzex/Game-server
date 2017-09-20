@@ -6,21 +6,34 @@ var socket;
 var playScreen = 0;
 var img;
 var mgr;
+var descriptionImages = [];
 
 var titleFont;
 var normalFont;
+var i;
+
+let padToFour = number => number <= 9999 ? ("000"+number).slice(-4) : number;
 
 /* here we load our images */
 function preload() {
 
     titleFont = loadFont("/fonts/EUROS3.ttf");
     normalFont = loadFont("/fonts/simhei.ttf");
-  //img = loadImage("assets/background.jpg");
+    img = loadImage("assets/handcuffs_PNG5.png");
+
+    for (var i = 0; i < 10; i++) {
+      descriptionImages[i] = loadImage("assets/images/" + padToFour(i+2) +".jpg");
+      descriptionImages[i].resize(100,100);
+    }
 }
 
 
 
 function setup() {
+
+  for (var i = 0; i < 10; i++) {
+    descriptionImages[i].resize(windowWidth/2,0);
+  }
 
   createCanvas(windowWidth, windowHeight);
 
@@ -52,6 +65,10 @@ function mousePressed()
     mgr.mousePressed();
 }
 
+function keyPressed() {
+  mgr.keyPressed();
+}
+
 // =============================================================
 // =                         BEGIN SCENES                      =
 // =============================================================
@@ -69,13 +86,33 @@ function titleScreen_() {
 
     //this.draw = function() {
     //}
+
+    this.mousePressed = function() {
+      mgr.showNextScene();
+    }
 }
 
 function descriptionScreen_() {
+  var secStatus = 0
     this.setup = function() {
+        background('black');
     }
 
     this.draw = function() {
+      background('black');
+      image(descriptionImages[secStatus],width/2 -descriptionImages[secStatus].width/2,
+                                        height/2 -descriptionImages[secStatus].height/2  );
+    }
+
+    this.keyPressed = function () {
+      if (keyCode === LEFT_ARROW) {
+        if (secStatus > 0 ) secStatus -= 1;
+      }
+      else if (keyCode === RIGHT_ARROW) {
+        if (secStatus <11 ) secStatus += 1;
+        else mgr.showNextScene();
+      }
+
     }
 }
 
