@@ -28,9 +28,12 @@ function changeText(data) {                               //test placeholder
 }
 
 function mousePressed() {                                 //send data placeholder
+  sendSelection("collaborare")
+}
+
+function sendSelection(selection) {
   var data = {
-    messaggio: "scelta effettuata",
-    scelta: "collaborare"
+    scelta: selection
   }
   socket.emit('selection',data);
 }
