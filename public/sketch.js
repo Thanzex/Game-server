@@ -5,6 +5,7 @@ var socket;
 
 var playScreen = 0;
 var img;
+var mgr;
 
 /* here we load our images */
 function preload() {
@@ -31,9 +32,69 @@ function setup() {
   mgr.addScene( selectionScreen_ );
   mgr.addScene( resultScreen_ );
   mgr.addScene( playAgainScreen_ );
-
-
 }
+
+function draw() {
+  mgr.draw();
+}
+
+function mousePressed()
+{
+    mgr.mousePressed();
+}
+
+// =============================================================
+// =                         BEGIN SCENES                      =
+// =============================================================
+
+function titleScreen_() {
+    this.setup = function() {
+    }
+
+    this.draw = function() {
+    }
+}
+
+function descriptionScreen_() {
+    this.setup = function() {
+    }
+
+    this.draw = function() {
+    }
+}
+
+function readyScreen_() {
+    this.setup = function() {
+    }
+
+    this.draw = function() {
+    }
+}
+
+function selectionScreen_() {
+    this.setup = function() {
+    }
+
+    this.draw = function() {
+    }
+}
+
+function resultScreen_() {
+    this.setup = function() {
+    }
+
+    this.draw = function() {
+    }
+}
+
+function playAgainScreen_() {
+    this.setup = function() {
+    }
+
+    this.draw = function() {
+    }
+}
+
 
 function sendSelection(selection) {
   var data = {
@@ -41,13 +102,6 @@ function sendSelection(selection) {
   }
   socket.emit('selection',data);
 }
-
-function draw() {
-  clear();
-  background(0);
-}
-}
-
 
 ////////// more functions
 /*
