@@ -1,5 +1,5 @@
-var introText = ["zero","one","two","three","four"];
-var introIndex = 0;
+//var introText = ["zero","one","two","three","four"];
+//var introIndex = 0;
 
 var socket;
 
@@ -7,24 +7,31 @@ var playScreen = 0;
 var img;
 var mgr;
 
+var titleFont;
+var normalFont;
+
 /* here we load our images */
 function preload() {
+
+    titleFont = loadFont("/fonts/EUROS3.ttf");
+    normalFont = loadFont("/fonts/simhei.ttf");
   //img = loadImage("assets/background.jpg");
 }
 
 
 
 function setup() {
+
   createCanvas(windowWidth, windowHeight);
 
   fill(255);
   //Connection to the server
   socket = io.connect("http://localhost:3000");           //open connection
-  socket.on('selection',changeText);                      //selection event trigger *changetext*
+  //socket.on('selection',changeText);                      //selection event trigger *changetext*
   socket.on('reset', function() { location.reload(); });  //reset event trigger function
 
 
-  mgr = new sceneManager();
+  mgr = new SceneManager();
 
   mgr.addScene( titleScreen_ );
   mgr.addScene( descriptionScreen_ );
@@ -32,6 +39,8 @@ function setup() {
   mgr.addScene( selectionScreen_ );
   mgr.addScene( resultScreen_ );
   mgr.addScene( playAgainScreen_ );
+
+  mgr.showNextScene();
 }
 
 function draw() {
@@ -49,10 +58,17 @@ function mousePressed()
 
 function titleScreen_() {
     this.setup = function() {
+      background('black');
+      textSize(50);
+      textFont(titleFont);
+      textStyle(BOLD);
+      fill('white');
+      textAlign(CENTER);
+      text("PARTNERS IN CRIME",width/2,height/2);
     }
 
-    this.draw = function() {
-    }
+    //this.draw = function() {
+    //}
 }
 
 function descriptionScreen_() {
