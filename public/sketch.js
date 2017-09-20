@@ -12,23 +12,27 @@ function preload() {
 }
 
 
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
   fill(255);
-
+  //Connection to the server
   socket = io.connect("http://localhost:3000");           //open connection
   socket.on('selection',changeText);                      //selection event trigger *changetext*
   socket.on('reset', function() { location.reload(); });  //reset event trigger function
-}
 
-function changeText(data) {                               //test placeholder
-  introText[0]=data.scelta;
 
-}
+  mgr = new sceneManager();
 
-function mousePressed() {                                 //send data placeholder
-  sendSelection("collaborare")
+  mgr.addScene( titleScreen_ );
+  mgr.addScene( descriptionScreen_ );
+  mgr.addScene( readyScreen_ );
+  mgr.addScene( selectionScreen_ );
+  mgr.addScene( resultScreen_ );
+  mgr.addScene( playAgainScreen_ );
+
+
 }
 
 function sendSelection(selection) {
@@ -41,22 +45,12 @@ function sendSelection(selection) {
 function draw() {
   clear();
   background(0);
-
-  if (playScreen === 0) {
-      startScreen();
-
-  } else if (playScreen === 1) {
-  // this will be our game
-  ellipse(width/2,height/2,50,50);
-  } else if (playScreen === 2) {
-      // this will be our end screen
-
 }
 }
 
 
 ////////// more functions
-
+/*
 function startScreen() {
    //image(img, 0, 0);
 
@@ -90,3 +84,4 @@ function keyPressed(){
   }
 
 } // end keyPressed
+*/
