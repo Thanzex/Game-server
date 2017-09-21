@@ -8,6 +8,10 @@ var readyImg;
 var mgr;
 var descriptionImages = [];
 var resultImages =[];
+var welcome_image;
+var knowYourFateImage;
+var selectionImage;
+var playAgainImage;
 
 var titleFont;
 var normalFont;
@@ -28,7 +32,12 @@ function preload() {
   titleFont = loadFont("/fonts/EUROS3.ttf");
   normalFont = loadFont("/fonts/simhei.ttf");
 
-  readyImg = loadImage('assets/images/0012.jpg');
+  readyImg = loadImage('assets/images/READY.jpeg');
+  selectionImage = loadImage('assets/images/selection_screen.jpeg');
+  welcome_image = loadImage('assets/images/welcome_screen.jpeg');
+  knowYourFateImage = loadImage('assets/images/waiting_screen.jpeg');
+  playAgainImage = loadImage('assets/images/playagain_screen.jpeg');
+
   for (var i = 0; i < 10; i++) {
     descriptionImages[i] = loadImage("assets/images/" + padToFour(i + 2) + ".jpg");
   }
@@ -42,10 +51,10 @@ function preload() {
 function setup() {
 
   for (var i = 0; i < 10; i++) {
-    descriptionImages[i].resize(windowWidth / 2, 0);
+    descriptionImages[i].resize(windowWidth , 0);
   }
   for (var i = 0; i < 8; i++) {
-    resultImages[i].resize(windowWidth / 2, 0);
+    resultImages[i].resize(windowWidth , 0);
   }
   readyImg.resize(windowWidth/2,0);
 
@@ -92,12 +101,15 @@ function keyPressed() {
 function titleScreen_() {
   this.setup = function() {
     background('black');
+    /*
     textSize(50);
     textFont(titleFont);
     textStyle(BOLD);
     fill('white');
     textAlign(CENTER);
     text("PARTNERS IN CRIME", width / 2, height / 2);
+    */
+    image(welcome_image, width/2 - welcome_image.width/2, height/2 -welcome_image.height/2);
   }
 
   //this.draw = function() {
@@ -143,6 +155,7 @@ function readyScreen_() {
   this.setup = function() {
     background('black');
     image(readyImg, width/2 - readyImg.width/2, height/2 -readyImg.height/2);
+    /*
     textFont(normalFont);
     textAlign(CENTER,CENTER);
     textSize(40);
@@ -152,12 +165,13 @@ function readyScreen_() {
 
     text("YES",buttonYes.x,buttonYes.y);
     text("NO",buttonNo.x,buttonNo.y);
+    */
   }
 
   this.keyPressed = function() {
     if (keyCode === LEFT_ARROW) {
       sendData('Chose not ready.');
-      mgr.showScene(descriptionScreen_);
+      //mgr.showScene(descriptionScreen_);
     } else if (keyCode === RIGHT_ARROW) {
       sendData('Chose ready.');
       mgr.showNextScene();
@@ -191,7 +205,8 @@ function readyScreen_() {
 
 function selectionScreen_() {
   this.setup = function() {
-    background('pink');
+    background('black');
+    image(selectionImage, width/2 - selectionImage.width/2, height/2 -selectionImage.height/2);
     /* ===============MATRIX==============
     background ('black');
     var x = 0;
@@ -282,12 +297,15 @@ function selectionScreen_() {
 function waitScreen_() {
   this.setup = function() {
     background('black');
+    /*
     textSize(50);
     textFont(normalFont);
     textStyle(BOLD);
     fill('white');
     textAlign(CENTER);
     text("WAITING OTHER PLAYER", width / 2, height / 2);
+    */
+    image(knowYourFateImage, width/2 - knowYourFateImage.width/2, height/2 -knowYourFateImage.height/2);
 
   }
 
@@ -324,11 +342,30 @@ function resultScreen_() {
 }
 
 function playAgainScreen_() {
-  this.setup = function() {}
+  this.setup = function() {
+    background('black');
+    /*
+    textSize(50);
+    textFont(normalFont);
+    textStyle(BOLD);
+    fill('white');
+    textAlign(CENTER);
+    text("Play again?", width / 2, height / 2);
+    */
+    image(playAgainImage, width/2 - playAgainImage.width/2, height/2 -playAgainImage.height/2);
+  }
 
-  this.draw = function() {}
+  this.keyPressed = function() {
+    console.log('key pressed');
+    disconnect_();
+  }
+
+  //this.draw = function() {}
 }
 
+//==================================================================
+//=                         END SCENES                             =
+//==================================================================
 
 function sendSelection(choice) {
   var data = {
@@ -343,6 +380,12 @@ function sendData(data) {
   }
   console.log("Sending data: "+send.choice);
   socket.emit('stats', send);
+}
+
+function disconnect_() {
+  console.log("Disconnecting.");
+  socket.disconnect();
+  location.reload();
 }
 
 function waitForYou(choice) {

@@ -54,11 +54,11 @@ io.set('heartbeat timeout',2000);
 io.set('heartbeat interval',1000);
 
 io.sockets.on('connection',newConnection);
-io.sockets.on('disconnect',resetGames);
 
 function newConnection(socket) {
   logData("New connection: " + socket.id);
 
+  socket.on('disconnect',resetGames);
   socket.on('selection',Message);
   socket.on('stats',logStats);
 
@@ -66,7 +66,6 @@ function newConnection(socket) {
     logData("Client "+socket.id+"  sent data:  " + data.choice);
     socket.broadcast.emit('selection',data);
     logData("Broadcasting data...");
-    d= new Date();
     logStats(data);
   }
 
