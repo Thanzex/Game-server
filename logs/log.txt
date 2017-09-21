@@ -18,6 +18,7 @@ Logging player data: [object Object]
 Client 1zWYQ4g3OyCKNTFlAAAD  sent data:  silent
 Broadcasting data...
 Logging player data: [object Object]
+<<<<<<< HEAD
 New connection: jZeimgOvOUU5JS-oAAAE
 Logging player data: [object Object]
 Logging player data: [object Object]
@@ -104,3 +105,61 @@ Logging player data: Description start
 Logging player data: Ready screen
 Logging player data: Chose ready.
 Exiting at: 2017-09-21T19:21:31.014Z
+=======
+starting at: 2017-09-21T18:51:00.188Z
+Server Running.
+Listening at http://localhost:3000
+New connection: oZ5l5sp44IYyppREAAAA
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+Client oZ5l5sp44IYyppREAAAA  sent data:  talk
+Broadcasting data...
+Logging player data: talk
+New connection: PaKCl73VE-LSFsiRAAAB
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+Client PaKCl73VE-LSFsiRAAAB  sent data:  talk
+Broadcasting data...
+Logging player data: talk
+New connection: KTZ58TAg1SFY0BOuAAAC
+Logging player data: Description start
+Logging player data: Ready screen
+New connection: QBGo9P3p2iLojA8IAAAD
+Logging player data: Description start
+Logging player data: Ready screen
+New connection: 1hhf30af_AphTG54AAAE
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose not ready.
+Logging player data: Chose ready.
+New connection: o7MYV4GYYGer540KAAAF
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+New connection: vScYv6c2FgYI_5NuAAAG
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+New connection: P4IgxIXwLaKm0cHfAAAH
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+New connection: QTnmFWasIR7qW_tKAAAI
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+New connection: wX1WiKqClrHXUILYAAAJ
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+New connection: 0FnNEcFS5CMleACuAAAK
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+New connection: e5Hc1B4la7CapLTxAAAL
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+>>>>>>> 395149e512d80c97676e7da1b6fad5dbfdd67874

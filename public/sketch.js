@@ -1,14 +1,14 @@
 //var introText = ["zero","one","two","three","four"];
 //var introIndex = 0;
-
+ 
 var socket;
-
+ 
 var playScreen = 0;
 var readyImg;
 var mgr;
 var descriptionImages = [];
 var resultImages =[];
-
+ 
 var titleFont;
 var normalFont;
 var i;
@@ -16,18 +16,18 @@ var otherPlayerCompleted = false;
 var otherChoice;
 var choice;
 var end;
-
+ 
 var symbolSize = 24;
 var streams = [];
-
+ 
 let padToFour = number => number <= 9999 ? ("000" + number).slice(-4) : number;
-
+ 
 /* here we load our images */
 function preload() {
-
+ 
   titleFont = loadFont("/fonts/EUROS3.ttf");
   normalFont = loadFont("/fonts/simhei.ttf");
-
+ 
   readyImg = loadImage('assets/images/0012.jpg');
   for (var i = 0; i < 10; i++) {
     descriptionImages[i] = loadImage("assets/images/" + padToFour(i + 2) + ".jpg");
@@ -36,11 +36,11 @@ function preload() {
     resultImages[i] = loadImage("assets/images/" + padToFour(i + 16) + ".jpg")
   }
 }
-
-
-
+ 
+ 
+ 
 function setup() {
-
+ 
   for (var i = 0; i < 10; i++) {
     descriptionImages[i].resize(windowWidth / 2, 0);
   }
@@ -48,9 +48,9 @@ function setup() {
     resultImages[i].resize(windowWidth / 2, 0);
   }
   readyImg.resize(windowWidth/2,0);
-
+ 
   createCanvas(windowWidth, windowHeight);
-
+ 
   fill(255);
   //Connection to the server
   socket = io({transports: ['websocket'], upgrade: false});
@@ -59,10 +59,10 @@ function setup() {
   socket.on('reset', function() {
     location.reload();
   }); //reset event trigger function
-
-
+ 
+ 
   mgr = new SceneManager();
-
+ 
   mgr.addScene(titleScreen_);
   mgr.addScene(descriptionScreen_);
   mgr.addScene(readyScreen_);
@@ -70,26 +70,26 @@ function setup() {
   mgr.addScene(waitScreen_);
   mgr.addScene(resultScreen_);
   mgr.addScene(playAgainScreen_);
-
+ 
   mgr.showNextScene();
 }
-
+ 
 function draw() {
   mgr.draw();
 }
-
+ 
 function mousePressed() {
   mgr.mousePressed();
 }
-
+ 
 function keyPressed() {
   mgr.keyPressed();
 }
-
+ 
 // =============================================================
 // =                         BEGIN SCENES                      =
 // =============================================================
-
+ 
 function titleScreen_() {
   this.setup = function() {
     background('black');
@@ -100,10 +100,10 @@ function titleScreen_() {
     textAlign(CENTER);
     text("PARTNERS IN CRIME", width / 2, height / 2);
   }
-
+ 
   //this.draw = function() {
   //}
-
+ 
   this.mousePressed = function() {
     mgr.showNextScene();
   }
@@ -111,7 +111,7 @@ function titleScreen_() {
     mgr.showNextScene();
   }
 }
-
+ 
 function descriptionScreen_() {
   sendData('Description start');
   var secStatus = 0
@@ -119,13 +119,13 @@ function descriptionScreen_() {
     background('black');
     secStatus = 0;
   }
-
+ 
   this.draw = function() {
     background('black');
     image(descriptionImages[secStatus], width / 2 - descriptionImages[secStatus].width / 2,
       height / 2 - descriptionImages[secStatus].height / 2);
   }
-
+ 
   this.keyPressed = function() {
     if (keyCode === LEFT_ARROW) {
       if (secStatus > 0) secStatus -= 1;
@@ -133,12 +133,12 @@ function descriptionScreen_() {
       if (secStatus < 9) secStatus += 1;
       else mgr.showNextScene();
     }
-
+ 
   }
   this.mousePressed = function() {
   }
 }
-
+ 
 function readyScreen_() {
   sendData('Ready screen');
   this.setup = function() {
@@ -150,11 +150,11 @@ function readyScreen_() {
     fill(255);
     var buttonNo = createVector(map(1120,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
     var buttonYes =createVector(map(3288,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
-
+ 
     text("YES",buttonYes.x,buttonYes.y);
     text("NO",buttonNo.x,buttonNo.y);
   }
-
+ 
   this.keyPressed = function() {
     if (keyCode === LEFT_ARROW) {
       sendData('Chose not ready.');
@@ -164,7 +164,7 @@ function readyScreen_() {
       mgr.showNextScene();
     }
   }
-
+ 
   /*
   this.mousePressed = function() {
     var mouse = createVector(mouseX,mouseY)
@@ -184,12 +184,12 @@ function readyScreen_() {
     }
   }
   */
-
+ 
   //this.draw = function() {
-
+ 
   //}
 }
-
+ 
 function selectionScreen_() {
   this.setup = function() {
     background('black');
@@ -206,7 +206,7 @@ function selectionScreen_() {
     textSize(symbolSize);
      //==============MATRIX==============
   }
-
+ 
   this.draw = function() {
     //// ===============MATRIX==============
     background (0);
@@ -218,32 +218,32 @@ function selectionScreen_() {
       //add text or sound
     }
   }
-
+ 
   function Symbol(x, y, speed) {
-
+ 
     this.x = x;
     this.y = y;
-
+ 
     this.value = 0;
     this.speed = speed;
     this.switchInterval = round(random(2, 20));
-
+ 
     this.setToRandomSymbol = function() {
       if (frameCount % this.switchInterval == 0) {
         this.value = String.fromCharCode(0x30a0 + round(0, 96));//
       }
     }
-
+ 
     this.rain = function() {
       this.y = (this.y >= height) ? 0 : this.y += this.speed;
     }
   }
-
+ 
   function Stream_() {
     this.symbols = [];
     this.totalSymbols = round(random(88, 40));
     this.speed = random(6, 18);
-
+ 
     this.generateSymbols = function(x, y) {
       for (var i = 0; i <= this.totalSymbols; i++) {
         this.symbol = new Symbol(x, y, this.speed);
@@ -252,7 +252,7 @@ function selectionScreen_() {
         y -= symbolSize;
       }
     }
-
+ 
     this.render = function() {
       this.symbols.forEach(function(symbol) {
         fill(0, 24, 255);
@@ -262,7 +262,7 @@ function selectionScreen_() {
       });
     }
   }
-
+ 
   this.keyPressed = function() {
     if (keyCode === LEFT_ARROW) {
       //SILET
@@ -279,7 +279,7 @@ function selectionScreen_() {
     }
   }
 }
-
+ 
 function waitScreen_() {
   this.setup = function() {
     background('black');
@@ -289,16 +289,16 @@ function waitScreen_() {
     fill('white');
     textAlign(CENTER);
     text("WAITING OTHER PLAYER", width / 2, height / 2);
-
+ 
   }
-
+ 
   this.draw = function() {
     //POSSIBLE GIF
     if (otherPlayerCompleted) {console.log("Done"); mgr.showNextScene();}
   }
 }
-
-
+ 
+ 
 function resultScreen_() {
   var secStatus = 0;
   this.setup = function() {
@@ -308,29 +308,29 @@ function resultScreen_() {
     else if (otherChoice == 'talk' && choice == 'silent') end = 2;  //OTHER TALKED
     else if (otherChoice == 'silent' && choice == 'talk') end = 3;  //YOU TALKED
   }
-
+ 
   this.draw = function() {
     background('black');
     image(resultImages[secStatus + end*2],windowWidth/2 - resultImages[secStatus + end*2].width/2, windowHeight/2 -resultImages[secStatus + end*2].height/2);
   }
-
+ 
   this.keyPressed = function() {
     if (keyCode === RIGHT_ARROW) {
       if (secStatus == 0) secStatus += 1;
       else mgr.showNextScene();
     }
-
+ 
   }
-
+ 
 }
-
+ 
 function playAgainScreen_() {
   this.setup = function() {}
-
+ 
   this.draw = function() {}
 }
-
-
+ 
+ 
 function sendSelection(choice) {
   var data = {
     'choice': choice
@@ -345,51 +345,51 @@ function sendData(data) {
   console.log("Sending data: "+send.choice);
   socket.emit('stats', send);
 }
-
+ 
 function waitForYou(choice) {
   otherPlayerCompleted =true;
   otherChoice = choice.choice;
 }
-
+ 
 //===========================MATRIX FUNCTIONS=======================//
-
+ 
 function toUTF16(codePoint) {
   var TEN_BITS = parseInt('1111111111', 2);
-
+ 
   function u(codeUnit) {
     return '\\u' + codeUnit.toString(16).toUpperCase();
   }
-
+ 
   if (codePoint <= 0xFFFF) {
     return u(codePoint);
   }
   codePoint -= 0x10000;
-
+ 
   // Shift right to get to most significant 10 bits
   var leadSurrogate = 0xD800 + (codePoint >> 10);
-
+ 
   // Mask to get least significant 10 bits
   var tailSurrogate = 0xDC00 + (codePoint & TEN_BITS);
-
+ 
   return u(leadSurrogate) + u(tailSurrogate);
 }
-
-
+ 
+ 
 ////////// more functions
 /*
 function startScreen() {
    //image(img, 0, 0);
-
+ 
     textSize(25);
     text(introText[introIndex], width/2,height/2);
   if (introIndex ===3) {
     playScreen=1;
   }
-
+ 
 }
-
+ 
 function keyPressed(){
-
+ 
   if (playScreen === 0) {
     if (keyCode === LEFT_ARROW) {
       introIndex-=1;
@@ -398,8 +398,8 @@ function keyPressed(){
       introIndex+=1;
     }
   }
-
-
+ 
+ 
   if (playScreen === 1) {
     if (keyCode === LEFT_ARROW) {
       // option 1
@@ -408,6 +408,7 @@ function keyPressed(){
       // option 2
     }
   }
-
+ 
 } // end keyPressed
 */
+ 
