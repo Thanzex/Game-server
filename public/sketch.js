@@ -21,6 +21,8 @@ var otherChoice;
 var choice;
 var end;
 
+var HOST = '192.168.1.101';
+
 var symbolSize = 24;
 var streams = [];
 
@@ -62,7 +64,7 @@ function setup() {
 
   fill(255);
   //Connection to the server
-  socket = io.connect("http://localhost:3000"); //open connection
+  socket = io.connect("http://"+HOST+":3000"); //open connection
   socket.on('selection',waitForYou);                      //selection event trigger *changetext*
   socket.on('reset', function() {
     location.reload();
