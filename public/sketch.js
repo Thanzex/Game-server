@@ -4,7 +4,7 @@
 var socket;
 
 var playScreen = 0;
-var img;
+var readyImg;
 var mgr;
 var descriptionImages = [];
 
@@ -12,19 +12,22 @@ var titleFont;
 var normalFont;
 var i;
 
-let padToFour = number => number <= 9999 ? ("000"+number).slice(-4) : number;
+var symbolSize = 24;
+var streams = [];
+
+let padToFour = number => number <= 9999 ? ("000" + number).slice(-4) : number;
 
 /* here we load our images */
 function preload() {
 
-    titleFont = loadFont("/fonts/EUROS3.ttf");
-    normalFont = loadFont("/fonts/simhei.ttf");
-    img = loadImage("assets/handcuffs_PNG5.png");
+  titleFont = loadFont("/fonts/EUROS3.ttf");
+  normalFont = loadFont("/fonts/simhei.ttf");
 
-    for (var i = 0; i < 10; i++) {
-      descriptionImages[i] = loadImage("assets/images/" + padToFour(i+2) +".jpg");
-      descriptionImages[i].resize(100,100);
-    }
+  readyImg = loadImage('assets/images/0012.jpg');
+  for (var i = 0; i < 10; i++) {
+    descriptionImages[i] = loadImage("assets/images/" + padToFour(i + 2) + ".jpg");
+    descriptionImages[i].resize(100, 100);
+  }
 }
 
 
@@ -32,26 +35,29 @@ function preload() {
 function setup() {
 
   for (var i = 0; i < 10; i++) {
-    descriptionImages[i].resize(windowWidth/2,0);
+    descriptionImages[i].resize(windowWidth / 2, 0);
   }
+  readyImg.resize(windowWidth/2,0);
 
   createCanvas(windowWidth, windowHeight);
 
   fill(255);
   //Connection to the server
-  socket = io.connect("http://localhost:3000");           //open connection
+  socket = io.connect("http://localhost:3000"); //open connection
   //socket.on('selection',changeText);                      //selection event trigger *changetext*
-  socket.on('reset', function() { location.reload(); });  //reset event trigger function
+  socket.on('reset', function() {
+    location.reload();
+  }); //reset event trigger function
 
 
   mgr = new SceneManager();
 
-  mgr.addScene( titleScreen_ );
-  mgr.addScene( descriptionScreen_ );
-  mgr.addScene( readyScreen_ );
-  mgr.addScene( selectionScreen_ );
-  mgr.addScene( resultScreen_ );
-  mgr.addScene( playAgainScreen_ );
+  mgr.addScene(titleScreen_);
+  mgr.addScene(descriptionScreen_);
+  mgr.addScene(readyScreen_);
+  mgr.addScene(selectionScreen_);
+  mgr.addScene(resultScreen_);
+  mgr.addScene(playAgainScreen_);
 
   mgr.showNextScene();
 }
@@ -60,9 +66,8 @@ function draw() {
   mgr.draw();
 }
 
-function mousePressed()
-{
-    mgr.mousePressed();
+function mousePressed() {
+  mgr.mousePressed();
 }
 
 function keyPressed() {
@@ -74,78 +79,183 @@ function keyPressed() {
 // =============================================================
 
 function titleScreen_() {
-    this.setup = function() {
-      background('black');
-      textSize(50);
-      textFont(titleFont);
-      textStyle(BOLD);
-      fill('white');
-      textAlign(CENTER);
-      text("PARTNERS IN CRIME",width/2,height/2);
-    }
+  this.setup = function() {
+    background('black');
+    textSize(50);
+    textFont(titleFont);
+    textStyle(BOLD);
+    fill('white');
+    textAlign(CENTER);
+    text("PARTNERS IN CRIME", width / 2, height / 2);
+  }
 
-    //this.draw = function() {
-    //}
+  //this.draw = function() {
+  //}
 
-    this.mousePressed = function() {
-      mgr.showNextScene();
-    }
+  this.mousePressed = function() {
+    mgr.showNextScene();
+  }
+  this.keyPressed = function() {
+    mgr.showNextScene();
+  }
 }
 
 function descriptionScreen_() {
   var secStatus = 0
-    this.setup = function() {
-        background('black');
+  this.setup = function() {
+    background('black');
+    secStatus = 0;
+  }
+
+  this.draw = function() {
+    background('black');
+    image(descriptionImages[secStatus], width / 2 - descriptionImages[secStatus].width / 2,
+      height / 2 - descriptionImages[secStatus].height / 2);
+  }
+
+  this.keyPressed = function() {
+    if (keyCode === LEFT_ARROW) {
+      if (secStatus > 0) secStatus -= 1;
+    } else if (keyCode === RIGHT_ARROW) {
+      if (secStatus < 9) secStatus += 1;
+      else mgr.showNextScene();
     }
 
-    this.draw = function() {
-      background('black');
-      image(descriptionImages[secStatus],width/2 -descriptionImages[secStatus].width/2,
-                                        height/2 -descriptionImages[secStatus].height/2  );
-    }
-
-    this.keyPressed = function () {
-      if (keyCode === LEFT_ARROW) {
-        if (secStatus > 0 ) secStatus -= 1;
-      }
-      else if (keyCode === RIGHT_ARROW) {
-        if (secStatus <11 ) secStatus += 1;
-        else mgr.showNextScene();
-      }
-
-    }
+  }
+  this.mousePressed = function() {
+  }
 }
 
 function readyScreen_() {
-    this.setup = function() {
+  this.setup = function() {
+    background('black');
+    image(readyImg, width/2 - readyImg.width/2, height/2 -readyImg.height/2);
+    textFont(normalFont);
+    textAlign(CENTER,CENTER);
+    textSize(40);
+    fill(255);
+    var buttonNo = createVector(map(1120,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
+    var buttonYes =createVector(map(3288,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
+
+    text("YES",buttonYes.x,buttonYes.y);
+    text("NO",buttonNo.x,buttonNo.y);
+  }
+
+  this.keyPressed = function() {
+    if (keyCode === LEFT_ARROW) {
+      mgr.showScene(descriptionScreen_);
+    } else if (keyCode === RIGHT_ARROW) {
+      mgr.showNextScene();
     }
 
-    this.draw = function() {
+  }
+
+  /*
+  this.mousePressed = function() {
+    var mouse = createVector(mouseX,mouseY)
+    console.log(mouse);
+    var buttonNo = createVector(map(1120,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
+    console.log(buttonNo);
+    var buttonYes =createVector(map(3288,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
+    console.log(buttonYes);
+    if (p5.Vector.dist(mouse, buttonNo) <= map(209,0,4267,0,windowWidth/2))
+    {
+      // PRESSED NO
+      mgr.showScene(descriptionScreen_);
+    } else if (p5.Vector.dist(mouse, buttonYes) <= map(209,0,4267,0,windowWidth/2))
+    {
+      //PRESSED YES
+      mgr.showNextScene();
     }
+  }
+  */
+
+  //this.draw = function() {
+
+  //}
 }
 
 function selectionScreen_() {
-    this.setup = function() {
+  this.setup = function() {
+    background('pink');
+    /* ===============MATRIX==============
+    background ('black');
+    var x = 0;
+    var y = 0;
+    for (var i = 0; i <= windowWidth / symbolSize; i++) {
+      var stream = new Stream_ ();
+      stream.generateSymbols(x,y);
+      streams.push(stream);
+      x +=symbolSize
+    }
+    textSize(symbolSize);
+    */ //==============MATRIX==============
+  }
+
+  this.draw = function() {
+    /* ===============MATRIX==============
+    background (0);
+    streams.forEach(function(stream) {
+      stream.render();
+    });
+    */ //==============MATRIX==============
+  }
+
+  function Symbol(x, y, speed) {
+
+    this.x = x;
+    this.y = y;
+
+    this.value = 0;
+    this.speed = speed;
+    this.switchInterval = round(random(2, 20));
+
+    this.setToRandomSymbol = function() {
+      if (frameCount % this.switchInterval == 0) {
+        this.value = toUTF16(0x30a0 + round(0, 96)); //String.fromCharCode(0x30a0 + round(0, 96));//
+      }
     }
 
-    this.draw = function() {
+    this.rain = function() {
+      this.y = (this.y >= height) ? 0 : this.y += this.speed;
     }
+  }
+
+  function Stream_() {
+    this.symbols = [];
+    this.totalSymbols = round(random(88, 40));
+    this.speed = random(6, 18);
+
+    this.generateSymbols = function(x, y) {
+      for (var i = 0; i <= this.totalSymbols; i++) {
+        this.symbol = new Symbol(x, y, this.speed);
+        this.symbol.setToRandomSymbol();
+        this.symbols.push(this.symbol);
+        y -= symbolSize;
+      }
+    }
+
+    this.render = function() {
+      this.symbols.forEach(function(symbol) {
+        fill(0, 24, 255);
+        text(symbol.value, symbol.x, symbol.y);
+        symbol.rain();
+        symbol.setToRandomSymbol();
+      });
+    }
+  }
 }
 
 function resultScreen_() {
-    this.setup = function() {
-    }
+  this.setup = function() {}
 
-    this.draw = function() {
-    }
+  this.draw = function() {}
 }
 
 function playAgainScreen_() {
-    this.setup = function() {
-    }
+  this.setup = function() {}
 
-    this.draw = function() {
-    }
+  this.draw = function() {}
 }
 
 
@@ -153,8 +263,32 @@ function sendSelection(selection) {
   var data = {
     scelta: selection
   }
-  socket.emit('selection',data);
+  socket.emit('selection', data);
 }
+
+//===========================MATRIX FUNCTIONS=======================//
+
+function toUTF16(codePoint) {
+  var TEN_BITS = parseInt('1111111111', 2);
+
+  function u(codeUnit) {
+    return '\\u' + codeUnit.toString(16).toUpperCase();
+  }
+
+  if (codePoint <= 0xFFFF) {
+    return u(codePoint);
+  }
+  codePoint -= 0x10000;
+
+  // Shift right to get to most significant 10 bits
+  var leadSurrogate = 0xD800 + (codePoint >> 10);
+
+  // Mask to get least significant 10 bits
+  var tailSurrogate = 0xDC00 + (codePoint & TEN_BITS);
+
+  return u(leadSurrogate) + u(tailSurrogate);
+}
+
 
 ////////// more functions
 /*

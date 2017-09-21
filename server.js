@@ -35,7 +35,7 @@ if (process.platform === "win32") {                       //Catch exit
 }
 
 
-var HOST = 'localhost';
+var HOST = 'localhost';//'192.168.1.101';
 var PORT = "3000";
 
 logData("starting at: " + d.toISOString());
