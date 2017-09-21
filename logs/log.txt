@@ -18,3 +18,89 @@ Logging player data: [object Object]
 Client 1zWYQ4g3OyCKNTFlAAAD  sent data:  silent
 Broadcasting data...
 Logging player data: [object Object]
+New connection: jZeimgOvOUU5JS-oAAAE
+Logging player data: [object Object]
+Logging player data: [object Object]
+New connection: vf6ZYdUgXK4TGw-2AAAF
+Logging player data: [object Object]
+Logging player data: [object Object]
+New connection: MlQybKXlqBt9g8xSAAAG
+Logging player data: [object Object]
+Logging player data: [object Object]
+New connection: 7AFdhqbDk35fiV1rAAAH
+Logging player data: [object Object]
+Logging player data: [object Object]
+Logging player data: [object Object]
+Logging player data: [object Object]
+Client MlQybKXlqBt9g8xSAAAG  sent data:  talk
+Broadcasting data...
+Logging player data: [object Object]
+Client 7AFdhqbDk35fiV1rAAAH  sent data:  silent
+Broadcasting data...
+Logging player data: [object Object]
+New connection: QuLUmk2aPTs054WpAAAI
+Logging player data: [object Object]
+Logging player data: [object Object]
+Exiting at: 2017-09-21T17:20:54.721Z
+starting at: 2017-09-21T17:20:58.974Z
+Server Running.
+Listening at http://localhost:3000
+New connection: 9TAmFsZE4uD_4I0_AAAA
+New connection: x2_H46Q7PUv2_fhOAAAB
+Logging player data: Description start
+Logging player data: Ready screen
+Exiting at: 2017-09-21T18:25:47.304Z
+starting at: 2017-09-21T18:43:49.204Z
+Server Running.
+Listening at http://localhost:3000
+New connection: nRkUECBbfSAH9tL-AAAA
+Logging player data: Description start
+Logging player data: Ready screen
+New connection: gUS2fQFgS58OfTjXAAAB
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+Logging player data: Chose ready.
+Client gUS2fQFgS58OfTjXAAAB  sent data:  talk
+Broadcasting data...
+Logging player data: talk
+Client nRkUECBbfSAH9tL-AAAA  sent data:  talk
+Broadcasting data...
+Logging player data: talk
+New connection: lqWcb5ljuzIqcGBGAAAC
+Logging player data: Description start
+Logging player data: Ready screen
+New connection: XOajvs_1YgL1TQnyAAAD
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+Client XOajvs_1YgL1TQnyAAAD  sent data:  silent
+Broadcasting data...
+Logging player data: silent
+Logging player data: Chose ready.
+Client lqWcb5ljuzIqcGBGAAAC  sent data:  talk
+Broadcasting data...
+Logging player data: talk
+New connection: kiSYyVmZ1TtlhaJCAAAE
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+Client kiSYyVmZ1TtlhaJCAAAE  sent data:  silent
+Broadcasting data...
+Logging player data: silent
+New connection: fRrrdLF2oEqhm1IAAAAF
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+Client fRrrdLF2oEqhm1IAAAAF  sent data:  talk
+Broadcasting data...
+Logging player data: talk
+New connection: POtCRUsaENxbSuBrAAAG
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+New connection: XwzlJDJ-IJ2aUWjxAAAH
+Logging player data: Description start
+Logging player data: Ready screen
+Logging player data: Chose ready.
+Exiting at: 2017-09-21T19:21:31.014Z
