@@ -1,8 +1,26 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
-var logStream = fs.createWriteStream('logs/log.txt', {'flags':'a'});
+var logStream = fs.createWriteStream('logs/log.txt', {'flags':'a' , 'autoClose':'true'});
+logStream.on('error', function() {
+  console.log("Log file not present, creating...");
+  fs.writeFile("logs/log.txt", "", function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    console.log("The file was saved!");
+  });
+});
 var playerStatsStream = fs.createWriteStream('logs/players.txt', {'flags':'a'});
+playerStatsStream.on('error', function() {
+  console.log("Player file not present, creating...");
+  fs.writeFile("logs/players.txt", "", function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    console.log("The file was saved!");
+  });
+});
 var d = new Date();
 
 if (process.platform === "win32") {                       //Catch exit
