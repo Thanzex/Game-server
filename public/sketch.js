@@ -11,6 +11,10 @@ var descriptionImages = [];
 var titleFont;
 var normalFont;
 var i;
+var otherPlayerCompleted = false;
+var otherChoice;
+var choice;
+var end;
 
 var symbolSize = 24;
 var streams = [];
@@ -44,7 +48,7 @@ function setup() {
   fill(255);
   //Connection to the server
   socket = io.connect("http://localhost:3000"); //open connection
-  //socket.on('selection',changeText);                      //selection event trigger *changetext*
+  socket.on('selection',waitForYou);                      //selection event trigger *changetext*
   socket.on('reset', function() {
     location.reload();
   }); //reset event trigger function
@@ -56,6 +60,7 @@ function setup() {
   mgr.addScene(descriptionScreen_);
   mgr.addScene(readyScreen_);
   mgr.addScene(selectionScreen_);
+  mgr.addScene(waitScreen_);
   mgr.addScene(resultScreen_);
   mgr.addScene(playAgainScreen_);
 
@@ -101,6 +106,7 @@ function titleScreen_() {
 }
 
 function descriptionScreen_() {
+  sendData('Description start');
   var secStatus = 0
   this.setup = function() {
     background('black');
@@ -127,6 +133,7 @@ function descriptionScreen_() {
 }
 
 function readyScreen_() {
+  sendData('Ready screen');
   this.setup = function() {
     background('black');
     image(readyImg, width/2 - readyImg.width/2, height/2 -readyImg.height/2);
@@ -143,11 +150,12 @@ function readyScreen_() {
 
   this.keyPressed = function() {
     if (keyCode === LEFT_ARROW) {
+      sendData('Chose not ready.');
       mgr.showScene(descriptionScreen_);
     } else if (keyCode === RIGHT_ARROW) {
+      sendData('Chose ready.');
       mgr.showNextScene();
     }
-
   }
 
   /*
@@ -199,6 +207,9 @@ function selectionScreen_() {
       stream.render();
     });
     */ //==============MATRIX==============
+    if (otherPlayerCompleted) {
+      //add text or sound
+    }
   }
 
   function Symbol(x, y, speed) {
@@ -244,12 +255,52 @@ function selectionScreen_() {
       });
     }
   }
+
+  this.keyPressed = function() {
+    if (keyCode === LEFT_ARROW) {
+      //SILET
+      sendSelection('silent');
+      choice = 'silent'
+      if (!otherPlayerCompleted) mgr.showNextScene();
+      else mgr.showScene(resultScreen_);
+    } else if (keyCode === RIGHT_ARROW) {
+      //TALK
+      sendSelection('talk');
+      choice = 'talk'
+      if (!otherPlayerCompleted) mgr.showNextScene();
+      else mgr.showScene(resultScreen_);
+    }
+  }
 }
 
-function resultScreen_() {
-  this.setup = function() {}
+function waitScreen_() {
+  this.setup = function() {
+    background('black');
+    textSize(50);
+    textFont(normalFont);
+    textStyle(BOLD);
+    fill('white');
+    textAlign(CENTER);
+    text("WAITING OTHER PLAYER", width / 2, height / 2);
 
-  this.draw = function() {}
+  }
+
+  this.draw = function() {
+    //POSSIBLE GIF
+    if (otherPlayerCompleted) mgr.showNextScene();
+  }
+}
+
+
+function resultScreen_() {
+  this.setup = function() {
+    if (otherChoice == 'silent' && choice == 'silent') end = 0;     //BOTH SILENT
+    else if (otherChoice == 'talk' && choice == 'talk') end = 1;    //BOTH TALK
+    else if (otherChoice == 'talk' && choice == 'silent') end = 2;  //OTHER TALKED
+    else if (otherChoice == 'silent' && choice == 'talk') end = 3;  //YOU TALKED
+  }
+
+  //this.draw = function() {}
 }
 
 function playAgainScreen_() {
@@ -259,11 +310,19 @@ function playAgainScreen_() {
 }
 
 
-function sendSelection(selection) {
+function sendSelection(choice) {
   var data = {
-    scelta: selection
+    'choice': choice
   }
   socket.emit('selection', data);
+}
+function sendData(data) {
+  socket.emit('stats', data);
+}
+
+function waitForYou(choice) {
+  otherPlayerCompleted =true;
+  otherChoice = choice.choice;
 }
 
 //===========================MATRIX FUNCTIONS=======================//

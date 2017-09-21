@@ -61,13 +61,17 @@ function newConnection(socket) {
   socket.on('stats',logStats);
 
   function Message(data) {
-    logData("Client "+socket.id+"  sent data:  " + data);
+    logData("Client "+socket.id+"  sent data:  " + data.choice);
     socket.broadcast.emit('selection',data);
     logData("Broadcasting data...");
+    d= new Date();
+    logStats(data);
   }
 
   function logStats(data) {
+    d= new Date();
     logData("Logging player data: " + data);
+    playerStatsStream.write("\r\nPlayer: "+socket.id+"\tAction:"+data.choice+"\t Time: "+d);
 
 
   }
