@@ -32,22 +32,26 @@ streams.forEach(function(stream) {
 
 function Symbol (x,y, speed) {
 
-  this.x = x;
-  this.y = y;
+this.x = x;
+this.y = y;
 
-  this.value = 0;
-  this.speed = speed;
-  this.switchInterval = round (random(2,20));
+this.value = 0;
+this.speed = speed;
+this.switchInterval = round (random(2,20));
 
-  this.setToRandomSymbol = function () {
-    if (frameCount % this.switchInterval == 0) {
-       this.value = String.fromCharCode (0x30a0 + round(0, 96));
-    }
+this.setToRandomSymbol = function () {
+if (frameCount % this.switchInterval == 0) {
+   this.value = String.fromCharCode (0x30a0 + round(0, 96))
+    ;
   }
+}
 
-  this.rain = function() {
-    this.y = (this.y >= height) ? 0 : this.y += this.speed;
-  }
+
+
+this.rain = function() {
+this.y = (this.y >= height) ? 0 : this.y += this.speed;
+}
+
 }
 
 function Stream () {
