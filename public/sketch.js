@@ -53,7 +53,8 @@ function setup() {
 
   fill(255);
   //Connection to the server
-  socket = io.connect("http://localhost:3000"); //open connection
+  socket = io({transports: ['websocket'], upgrade: false});
+  socket.connect("http://localhost:3000"); //open connection
   socket.on('selection',waitForYou);                      //selection event trigger *changetext*
   socket.on('reset', function() {
     location.reload();
@@ -191,8 +192,8 @@ function readyScreen_() {
 
 function selectionScreen_() {
   this.setup = function() {
-    background('pink');
-    /* ===============MATRIX==============
+    background('black');
+    // ===============MATRIX==============
     background ('black');
     var x = 0;
     var y = 0;
@@ -203,16 +204,16 @@ function selectionScreen_() {
       x +=symbolSize
     }
     textSize(symbolSize);
-    */ //==============MATRIX==============
+     //==============MATRIX==============
   }
 
   this.draw = function() {
-    /* ===============MATRIX==============
+    //// ===============MATRIX==============
     background (0);
     streams.forEach(function(stream) {
       stream.render();
     });
-    */ //==============MATRIX==============
+    //*/ //==============MATRIX==============
     if (otherPlayerCompleted) {
       //add text or sound
     }
@@ -229,7 +230,7 @@ function selectionScreen_() {
 
     this.setToRandomSymbol = function() {
       if (frameCount % this.switchInterval == 0) {
-        this.value = toUTF16(0x30a0 + round(0, 96)); //String.fromCharCode(0x30a0 + round(0, 96));//
+        this.value = String.fromCharCode(0x30a0 + round(0, 96));//
       }
     }
 
