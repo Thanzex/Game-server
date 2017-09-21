@@ -1,56 +1,20 @@
 
-starting at: 2017-09-20T18:21:17.715Z
+starting at: 2017-09-21T16:58:22.567Z
 Server Running.
 Listening at http://localhost:3000
-New connection: EDyvdOUeu1Pr9nGLAAAA
-New connection: EDiY8LrEPpfKhW0YAAAB
-New connection: j1hSo3UrLfFoPBg6AAAC
-New connection: vrLg6Y3pqPz7YGP4AAAD
-New connection: DVGDb0B7UjPCFUYCAAAE
-New connection: fsL6Oy4EV5YPiiPZAAAF
-New connection: zTQwdIDDjFROEHf7AAAG
-New connection: Q6W9WYjoefakEOUYAAAH
-New connection: YxXLLOFFZNQm1nefAAAI
-New connection: d1JWfyE3RTCLSDjpAAAJ
-New connection: rZYdOFRmNKv79nZEAAAK
-New connection: NHjcDbzVGWde-OfeAAAL
-New connection: 902riWIPpP4V8ucbAAAM
-New connection: oHyTTo3D0ET_xEtyAAAN
-New connection: 6nDwAYkNhWiN66E3AAAO
-New connection: yW7nGvIbwMsxkcASAAAP
-New connection: A8TOD70NKwrVujZrAAAQ
-New connection: hbJ0Ft2c8REqOkFzAAAR
-New connection: g5W9DIf5b7P4oqLSAAAS
-New connection: kKJMzSOzIZTGRwS0AAAT
-New connection: FIH_GQhS-rqHvnQGAAAU
-New connection: md6h8fl4L-IL04ymAAAV
-New connection: V0dtMwXzEA3FEFY9AAAW
-New connection: dH3W28vR6GFYR-YoAAAX
-New connection: XM2AoEVxiN0CpOT0AAAY
-New connection: HcLYkt4Qb46M1mdTAAAZ
-New connection: 3DVnFFaxj9S6Zg00AAAa
-New connection: Sh_qNxboXOYPf5RCAAAb
-New connection: FKHdfLdAi-uHGqc2AAAc
-New connection: sXZrECQlm_Y2rGbnAAAd
-New connection: k4IQATbeP6njqd5BAAAe
-New connection: lADYwfIxlINVyun6AAAf
-New connection: yD5NLI33MBpbsAXEAAAg
-New connection: 7RDXcQl2pc6PtKz6AAAh
-New connection: 6yo-Bj2LwphLio4NAAAi
-New connection: shjYVLfVwquy21skAAAj
-New connection: TwRhlE4y1KGYTeVZAAAk
-New connection: rI7Ktz0RI7BPSOveAAAl
-New connection: l2XFWQXvykeAESZzAAAm
-New connection: 0L8CvcHKZPBGF0poAAAn
-New connection: 2goTPsPegeP6y2UnAAAo
-New connection: a3NV9sllcQl58uv3AAAp
-New connection: z1kc6wQWcaXHJLkFAAAq
-starting at: 2017-09-20T22:57:42.804Z
-Server Running.
-Listening at http://localhost:3000
-New connection: w4KP2B-8a7612gzhAAAA
-New connection: tmElDV6gTcJwhuHGAAAB
-New connection: NRzHgeVduOWwVQA0AAAC
-New connection: U8hpCEN7Wf_uT5uCAAAD
-New connection: xFErlRHJdytdkWW4AAAE
-New connection: eKmzIHfNkGTNdDU_AAAF
+New connection: Vf7atHBOr0mdi5v9AAAA
+New connection: e9uIXhNYMz4Zh1BfAAAB
+New connection: uZuKl9zup3J5oY21AAAC
+Logging player data: [object Object]
+Logging player data: [object Object]
+New connection: 1zWYQ4g3OyCKNTFlAAAD
+Logging player data: [object Object]
+Logging player data: [object Object]
+Logging player data: [object Object]
+Logging player data: [object Object]
+Client uZuKl9zup3J5oY21AAAC  sent data:  silent
+Broadcasting data...
+Logging player data: [object Object]
+Client 1zWYQ4g3OyCKNTFlAAAD  sent data:  silent
+Broadcasting data...
+Logging player data: [object Object]

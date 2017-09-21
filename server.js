@@ -70,7 +70,7 @@ function newConnection(socket) {
 
   function logStats(data) {
     d= new Date();
-    logData("Logging player data: " + data);
+    logData("Logging player data: " + data.choice);
     playerStatsStream.write("\r\nPlayer: "+socket.id+"\tAction:"+data.choice+"\t Time: "+d);
 
 

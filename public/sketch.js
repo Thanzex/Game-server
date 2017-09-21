@@ -7,6 +7,7 @@ var playScreen = 0;
 var readyImg;
 var mgr;
 var descriptionImages = [];
+var resultImages =[];
 
 var titleFont;
 var normalFont;
@@ -30,7 +31,9 @@ function preload() {
   readyImg = loadImage('assets/images/0012.jpg');
   for (var i = 0; i < 10; i++) {
     descriptionImages[i] = loadImage("assets/images/" + padToFour(i + 2) + ".jpg");
-    descriptionImages[i].resize(100, 100);
+  }
+  for (var i = 0; i < 8; i++) {
+    resultImages[i] = loadImage("assets/images/" + padToFour(i + 16) + ".jpg")
   }
 }
 
@@ -40,6 +43,9 @@ function setup() {
 
   for (var i = 0; i < 10; i++) {
     descriptionImages[i].resize(windowWidth / 2, 0);
+  }
+  for (var i = 0; i < 8; i++) {
+    resultImages[i].resize(windowWidth / 2, 0);
   }
   readyImg.resize(windowWidth/2,0);
 
@@ -287,20 +293,34 @@ function waitScreen_() {
 
   this.draw = function() {
     //POSSIBLE GIF
-    if (otherPlayerCompleted) mgr.showNextScene();
+    if (otherPlayerCompleted) {console.log("Done"); mgr.showNextScene();}
   }
 }
 
 
 function resultScreen_() {
+  var secStatus = 0;
   this.setup = function() {
+    console.log("Result screen");
     if (otherChoice == 'silent' && choice == 'silent') end = 0;     //BOTH SILENT
     else if (otherChoice == 'talk' && choice == 'talk') end = 1;    //BOTH TALK
     else if (otherChoice == 'talk' && choice == 'silent') end = 2;  //OTHER TALKED
     else if (otherChoice == 'silent' && choice == 'talk') end = 3;  //YOU TALKED
   }
 
-  //this.draw = function() {}
+  this.draw = function() {
+    background('black');
+    image(resultImages[secStatus + end*2],windowWidth/2 - resultImages[secStatus + end*2].width/2, windowHeight/2 -resultImages[secStatus + end*2].height/2);
+  }
+
+  this.keyPressed = function() {
+    if (keyCode === RIGHT_ARROW) {
+      if (secStatus == 0) secStatus += 1;
+      else mgr.showNextScene();
+    }
+
+  }
+
 }
 
 function playAgainScreen_() {
@@ -314,10 +334,15 @@ function sendSelection(choice) {
   var data = {
     'choice': choice
   }
+  console.log("Sending choice: "+data.choice);
   socket.emit('selection', data);
 }
 function sendData(data) {
-  socket.emit('stats', data);
+  var send = {
+    'choice': data
+  }
+  console.log("Sending data: "+send.choice);
+  socket.emit('stats', send);
 }
 
 function waitForYou(choice) {
