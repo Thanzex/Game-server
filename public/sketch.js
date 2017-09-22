@@ -151,8 +151,8 @@ function readyScreen_() {
 }
 
 function selectionScreen_() {
-  sendData('Deciding.')
   this.setup = function() {
+    sendData('Deciding.');
     background('black');
     image(selectionImage, width / 2 - selectionImage.width / 2, height / 2 - selectionImage.height / 2);
     //  /* ===============MATRIX==============
