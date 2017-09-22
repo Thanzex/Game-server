@@ -21,7 +21,7 @@ var otherChoice;
 var choice;
 var end;
 
-var HOST = '192.168.1.101';
+var HOST = 'localhost';
 
 var symbolSize = 24;
 var streams = [];
@@ -35,7 +35,7 @@ function preload() {
   normalFont = loadFont("/fonts/simhei.ttf");
 
   readyImg = loadImage('assets/images/READY.jpeg');
-  selectionImage = loadImage('assets/images/selection_screen.jpeg');
+  selectionImage = loadImage('assets/images/selection_screen.png');
   welcome_image = loadImage('assets/images/welcome_screen.jpeg');
   knowYourFateImage = loadImage('assets/images/waiting_screen.jpeg');
   playAgainImage = loadImage('assets/images/playagain_screen.jpeg');
@@ -209,7 +209,7 @@ function selectionScreen_() {
   this.setup = function() {
     background('black');
     image(selectionImage, width/2 - selectionImage.width/2, height/2 -selectionImage.height/2);
-    /* ===============MATRIX==============
+  //  /* ===============MATRIX==============
     background ('black');
     var x = 0;
     var y = 0;
@@ -220,16 +220,17 @@ function selectionScreen_() {
       x +=symbolSize
     }
     textSize(symbolSize);
-    */ //==============MATRIX==============
+  //  */ //==============MATRIX==============
   }
 
   this.draw = function() {
-    /* ===============MATRIX==============
+    ///* ===============MATRIX==============
     background (0);
     streams.forEach(function(stream) {
       stream.render();
     });
-    */ //==============MATRIX==============
+    image(selectionImage, width/2 - selectionImage.width/2, height/2 -selectionImage.height/2);
+    //*/ //==============MATRIX==============
     if (otherPlayerCompleted) {
       //add text or sound
     }
@@ -246,7 +247,7 @@ function selectionScreen_() {
 
     this.setToRandomSymbol = function() {
       if (frameCount % this.switchInterval == 0) {
-        this.value = toUTF16(0x30a0 + round(0, 96)); //String.fromCharCode(0x30a0 + round(0, 96));//
+        this.value = (random()>0.5)? 0 : 1;//String.fromCharCode(0x0030 + round(0, 2));
       }
     }
 
@@ -257,7 +258,7 @@ function selectionScreen_() {
 
   function Stream_() {
     this.symbols = [];
-    this.totalSymbols = round(random(88, 40));
+    this.totalSymbols = 36;//round(random(88, 40));
     this.speed = random(6, 18);
 
     this.generateSymbols = function(x, y) {
