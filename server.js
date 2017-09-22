@@ -23,6 +23,11 @@ playerStatsStream.on('error', function() {
 });
 var d = new Date();
 
+var playersDict = {
+  'player1' : false,
+  'player2' : false
+};
+
 if (process.platform === "win32") {                       //Catch exit
   var rl = require("readline").createInterface({
     input: process.stdin,
@@ -56,14 +61,20 @@ io.set('heartbeat interval',1000);
 io.sockets.on('connection',newConnection);
 
 function newConnection(socket) {
-  logData("New connection: " + socket.id);
+  if (playersDict.player1) playersDict.player2 = socket.id;
+  else                     playersDict.player1 = socket.id;
+  logData("New connection: " + ((playersDict.player1 == socket.id) ?'player1':'player2'));
 
-  socket.on('disconnect',resetGames);
+  socket.on('disconnect',function() {
+    if(socket.id == playersDict.player1)  playersDict.player1 = false;
+    else playersDict.player2 = false;
+    resetGames();
+  });
   socket.on('selection',Message);
   socket.on('stats',logStats);
 
   function Message(data) {
-    logData("Client "+socket.id+"  sent data:  " + data.choice);
+    logData("Client "+((playersDict.player1 == socket.id) ?'player1':'player2')+"  sent data:  " + data.choice);
     socket.broadcast.emit('selection',data);
     logData("Broadcasting data...");
     logStats(data);
@@ -72,7 +83,7 @@ function newConnection(socket) {
   function logStats(data) {
     d= new Date();
     logData("Logging player data: " + data.choice);
-    playerStatsStream.write("\r\nPlayer: "+socket.id+"\tAction:"+data.choice+"\t Time: "+d);
+    playerStatsStream.write("\r\nPlayer: "+((playersDict.player1 == socket.id) ?'player1':'player2')+"\tAction:"+data.choice+"\t Time: "+d.toISOString());
 
 
   }
@@ -81,6 +92,7 @@ function newConnection(socket) {
 function resetGames() {
   io.sockets.emit('reset',"disconnection");
   logData("Client disconnected, refreshing all windows...");
+  playerStatsStream.write("\r\nExiting.");
 }
 
 process.on('SIGINT', function(){

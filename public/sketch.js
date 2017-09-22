@@ -48,9 +48,10 @@ function preload() {
   }
 }
 
-
+var fps = 30;
 
 function setup() {
+  frameRate(fps);
 
   for (var i = 0; i < 10; i++) {
     descriptionImages[i].resize(windowWidth , 0);
@@ -126,7 +127,7 @@ function titleScreen_() {
 }
 
 function descriptionScreen_() {
-  sendData('Description start');
+  //sendData('Description start');
   var secStatus = 0
   this.setup = function() {
     background('black');
@@ -153,7 +154,7 @@ function descriptionScreen_() {
 }
 
 function readyScreen_() {
-  sendData('Ready screen');
+  //sendData('Ready screen');
   this.setup = function() {
     background('black');
     image(readyImg, width/2 - readyImg.width/2, height/2 -readyImg.height/2);
@@ -172,10 +173,10 @@ function readyScreen_() {
 
   this.keyPressed = function() {
     if (keyCode === LEFT_ARROW) {
-      sendData('Chose not ready.');
+      //sendData('Chose not ready.');
       //mgr.showScene(descriptionScreen_);
     } else if (keyCode === RIGHT_ARROW) {
-      sendData('Chose ready.');
+      //sendData('Chose ready.');
       mgr.showNextScene();
     }
   }
@@ -206,6 +207,7 @@ function readyScreen_() {
 }
 
 function selectionScreen_() {
+  sendData('Deciding.')
   this.setup = function() {
     background('black');
     image(selectionImage, width/2 - selectionImage.width/2, height/2 -selectionImage.height/2);
