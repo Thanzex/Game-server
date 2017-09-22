@@ -247,7 +247,11 @@ function selectionScreen_() {
 
     this.setToRandomSymbol = function() {
       if (frameCount % this.switchInterval == 0) {
+<<<<<<< HEAD
         this.value = (random()>0.5)? 0 : 1; //String.fromCharCode(0x0030 + round(0, 2));
+=======
+        this.value = (random()>0.5)? 0 : 1;//String.fromCharCode(0x0030 + round(0, 2));
+>>>>>>> d0fff36c5ff327bc77c820a55d7a586fa3f11c1a
       }
     }
 
@@ -258,7 +262,11 @@ function selectionScreen_() {
 
   function Stream_() {
     this.symbols = [];
+<<<<<<< HEAD
     this.totalSymbols = round(height/24);//round(random(88, 40));
+=======
+    this.totalSymbols = 36;//round(random(88, 40));
+>>>>>>> d0fff36c5ff327bc77c820a55d7a586fa3f11c1a
     this.speed = random(6, 18);
 
     this.generateSymbols = function(x, y) {
