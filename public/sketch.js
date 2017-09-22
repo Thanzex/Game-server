@@ -100,19 +100,8 @@ function keyPressed() {
 function titleScreen_() {
   this.setup = function() {
     background('black');
-    /*
-    textSize(50);
-    textFont(titleFont);
-    textStyle(BOLD);
-    fill('white');
-    textAlign(CENTER);
-    text("PARTNERS IN CRIME", width / 2, height / 2);
-    */
     image(welcome_image, width / 2 - welcome_image.width / 2, height / 2 - welcome_image.height / 2);
   }
-
-  //this.draw = function() {
-  //}
 
   this.mousePressed = function() {
     mgr.showNextScene();
@@ -123,7 +112,6 @@ function titleScreen_() {
 }
 
 function descriptionScreen_() {
-  //sendData('Description start');
   var secStatus = 0
   this.setup = function() {
     background('black');
@@ -149,56 +137,17 @@ function descriptionScreen_() {
 }
 
 function readyScreen_() {
-  //sendData('Ready screen');
   this.setup = function() {
     background('black');
     image(readyImg, width / 2 - readyImg.width / 2, height / 2 - readyImg.height / 2);
-    /*
-    textFont(normalFont);
-    textAlign(CENTER,CENTER);
-    textSize(40);
-    fill(255);
-    var buttonNo = createVector(map(1120,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
-    var buttonYes =createVector(map(3288,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
-
-    text("YES",buttonYes.x,buttonYes.y);
-    text("NO",buttonNo.x,buttonNo.y);
-    */
   }
 
   this.keyPressed = function() {
     if (keyCode === LEFT_ARROW) {
-      //sendData('Chose not ready.');
-      //mgr.showScene(descriptionScreen_);
     } else if (keyCode === RIGHT_ARROW) {
-      //sendData('Chose ready.');
       mgr.showNextScene();
     }
   }
-
-  /*
-  this.mousePressed = function() {
-    var mouse = createVector(mouseX,mouseY)
-    console.log(mouse);
-    var buttonNo = createVector(map(1120,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
-    console.log(buttonNo);
-    var buttonYes =createVector(map(3288,0,4267,0,windowWidth/2) + readyImg.width/2,map(1870,0,3200,0,windowHeight/2) + readyImg.height/2);
-    console.log(buttonYes);
-    if (p5.Vector.dist(mouse, buttonNo) <= map(209,0,4267,0,windowWidth/2))
-    {
-      // PRESSED NO
-      mgr.showScene(descriptionScreen_);
-    } else if (p5.Vector.dist(mouse, buttonYes) <= map(209,0,4267,0,windowWidth/2))
-    {
-      //PRESSED YES
-      mgr.showNextScene();
-    }
-  }
-  */
-
-  //this.draw = function() {
-
-  //}
 }
 
 function selectionScreen_() {
