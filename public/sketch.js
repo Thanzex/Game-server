@@ -32,7 +32,7 @@ function preload() {
 
   readyImg = loadImage('assets/images/READY.jpeg');
   selectionImage = loadImage('assets/images/selection_screen.png');
-  welcome_image = loadImage('assets/images/welcome_screen.jpeg');
+  welcome_image = loadImage('assets/images/welcome_screen_new.jpg');
   knowYourFateImage = loadImage('assets/images/waiting_screen.jpeg');
   playAgainImage = loadImage('assets/images/playagain_screen.jpeg');
 
