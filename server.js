@@ -1,6 +1,22 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+//var ip = require('ip');
+
+/*
+fs.readFile('public/sketch.js', 'utf8', function (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  var result = data.replace(/var HOST = '.*'/g, "var HOST = '"+ip.address()+"';");
+
+  fs.writeFile('public/sketch.js', result, 'utf8', function (err) {
+     if (err) return console.log(err);
+  });
+});
+*/
+
+/*
 var logStream = fs.createWriteStream('logs/log.txt', {
   'flags': 'a',
   'autoClose': 'true'
@@ -26,6 +42,7 @@ playerStatsStream.on('error', function() {
     console.log("The file was saved!");
   });
 });
+*/
 var d = new Date();
 
 var playersDict = {
@@ -44,12 +61,13 @@ if (process.platform === "win32") { //Catch exit
   });
 }
 
-var HOST = 'localhost';
+var HOST = 'https://serverperlaura-uauauauauau.now.sh';//ip.address();
 var PORT = "3000";
 
 logData("starting at: " + d.toISOString());
 var server = app.listen(PORT, HOST, function(err) {
   if (err) return console.log(err);
+  process.exit(1);
   logData("Listening at http://" + HOST + ":" + PORT);
 });
 
@@ -60,8 +78,8 @@ logData("Server Running.");
 var socket = require('socket.io');
 var io = socket(server);
 
-io.set('heartbeat timeout', 2000);
-io.set('heartbeat interval', 1000);
+//io.set('heartbeat timeout', 2000);
+//io.set('heartbeat interval', 1000);
 
 io.sockets.on('connection', newConnection);
 
@@ -88,7 +106,7 @@ function newConnection(socket) {
   function logStats(data) {
     d = new Date();
     logData("Logging player data: " + data.choice);
-    playerStatsStream.write("\r\nPlayer: " + ((playersDict.player1 == socket.id) ? 'player1' : 'player2') + "\tAction:" + data.choice + "\t Time: " + d.toISOString());
+    //playerStatsStream.write("\r\nPlayer: " + ((playersDict.player1 == socket.id) ? 'player1' : 'player2') + "\tAction:" + data.choice + "\t Time: " + d.toISOString());
 
 
   }
@@ -97,18 +115,18 @@ function newConnection(socket) {
 function resetGames() {
   io.sockets.emit('reset', "disconnection");
   logData("Client disconnected, refreshing all windows...");
-  playerStatsStream.write("\r\nExiting.");
+  //playerStatsStream.write("\r\nExiting.");
 }
 
 process.on('SIGINT', function() {
   server.close();
   d = new Date();
   logData("Exiting at: " + d.toISOString());
-  playerStatsStream.write("\r\nExiting.");
+  //playerStatsStream.write("\r\nExiting.");
   process.exit();
 });
 
 function logData(data) {
   console.log(data);
-  logStream.write("\r\n" + data);
+  //logStream.write("\r\n" + data);
 }

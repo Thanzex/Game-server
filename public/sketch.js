@@ -17,7 +17,7 @@ var otherChoice;
 var choice;
 var end;
 
-var HOST = 'localhost';
+var HOST = 'https://serverperlaura-uauauauauau.now.sh';
 
 var symbolSize = 24;
 var streams = [];
@@ -27,8 +27,8 @@ let padToFour = number => number <= 9999 ? ("000" + number).slice(-4) : number;
 /* here we load our images */
 function preload() {
 
-  titleFont = loadFont("/fonts/EUROS3.ttf");
-  normalFont = loadFont("/fonts/simhei.ttf");
+  //titleFont = loadFont("/fonts/EUROS3.ttf");
+  //normalFont = loadFont("/fonts/simhei.ttf");
 
   readyImg = loadImage('assets/images/READY.jpeg');
   selectionImage = loadImage('assets/images/selection_screen.png');
