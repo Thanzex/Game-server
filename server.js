@@ -64,7 +64,6 @@ if (process.platform === "win32") { //Catch exit
   });
 }
 
-//var HOST = 'https://serverperlaura-uauauauauau.now.sh';//ip.address();
 var PORT = "3000";
 
 logData("starting at: " + d.toISOString());
@@ -87,24 +86,30 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
-  // if (playersDict.player1) playersDict.player2 = socket.id;
-  // else playersDict.player1 = socket.id;
-  // logData("New connection: " + ((playersDict.player1 == socket.id) ? 'player1' : 'player2'));
-  //
-  socket.on('disconnect', function(socket) {
-    for (obj in pairs) {
+  console.log('new connection! '+socket.id);
+  socket.on('disconnect', function() {
+    var tosplice;
+    console.log('disconnected: '+socket.id);
+
+    if (awaiting == socket.id) awaiting = false;
+    else
+    {pairs.forEach(function(obj) {
       Object.keys(obj).forEach(function(key) {
         if (obj[key] == socket.id) {
+          console.log('erasing pair: '+JSON.stringify(obj));
           socket.broadcast.to((key == 'player1')? obj['player2'] : obj['player1']).emit('left'); //Other disconnected
-          pairs.splice(array.indexOf(obj),1); //remove
+          tosplice = pairs.indexOf(obj); //remove
         }
       });
-    }
-  });
+    });
+    pairs.splice(tosplice,1);}
+  });  //DISCONNECT
 
-  if (!awaiting) awaiting = socket.id;
-  else {
-    pairs.push({player1 : awaiting, player2 : socket.id});
+  if (!awaiting) {awaiting = socket.id; console.log("New awaiting " + socket.id);}
+  else { socket.on('loaded', function() { socket.emit('ready'); });
+    console.log('creating pair '+ JSON.stringify({'player1' : awaiting, 'player2' : socket.id}));
+    pairs.push({'player1' : awaiting, 'player2' : socket.id});
+    socket.broadcast.to(awaiting).emit('ready');
     awaiting = false;
   }
 
@@ -112,19 +117,26 @@ function newConnection(socket) {
   //socket.on('stats', logStats);
 
   function Message(data) {
-    var idToSend = function(){ for (obj in pairs) {
-                                Object.keys(obj).forEach(function(key) {
-                                  if (obj[key] == socket.id) {
-                                    var s = (key == 'player1')?'player2' : 'player1';
-                                    return {'id' : obj[s],
-                                            'p' : s};
-                                  }
-                                });
-                              }
-                            }
-    logData("Client " + idToSend.id + " " + idToSend.p + "  sent data:  " + data.choice);
-    socket.broadcast.to(idToSend.id).emit('selection', data);
-    logData("Broadcasting data...");
+    var idToSend;
+
+     pairs.forEach(function(obj) {
+      //console.log("for obj in pairs : obj:" + JSON.stringify(obj));
+      Object.keys(obj).forEach(function(key) {
+        //console.log("object "+ JSON.stringify(obj) + ' key ' +key+' value: '+obj.key);
+        if (obj[key] == socket.id) {
+          //console.log('found pair in pairs');
+          var s = (key == 'player1')?'player2' : 'player1';
+        //  console.log(s);
+          idToSend = {'id' : obj[s] , 'p':s};
+        }
+      });
+    });
+    if (!idToSend) console.log("Invalid message.");
+    else
+    {
+      logData("Client " + idToSend.id + " " + idToSend.p + "  sent data:  " + data.choice);
+      socket.broadcast.to(idToSend.id).emit('selection', data);
+      logData("Broadcasting data...");}
   }
 
   // function logStats(data) {
