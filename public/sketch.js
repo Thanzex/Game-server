@@ -16,8 +16,9 @@ var otherPlayerCompleted = false;
 var otherChoice;
 var choice;
 var end;
+var ready = false,left = false;
 
-var HOST = 'https://serverperlaura-uauauauauau.now.sh';
+//var HOST = 'https://serverperlaura-uauauauauau.now.sh';
 
 var symbolSize = 24;
 var streams = [];
@@ -61,15 +62,18 @@ function setup() {
 
   fill(255);
   //Connection to the server
-  socket = io.connect("http://" + HOST + ":3000"); //open connection
+  socket = io();//.connect("http://" + HOST + ":3000"); //open connection
   socket.on('selection', waitForYou); //selection event trigger
   socket.on('reset', function() {
     location.reload();
   }); //reset event trigger function
+  socket.on('ready', function() { ready = true; });
+  socket.on('left', function() { left = true; });
 
 
   mgr = new SceneManager();
 
+  mgr.addScene(waitScreen_);
   mgr.addScene(titleScreen_);
   mgr.addScene(descriptionScreen_);
   mgr.addScene(readyScreen_);
@@ -77,6 +81,7 @@ function setup() {
   mgr.addScene(waitScreen_);
   mgr.addScene(resultScreen_);
   mgr.addScene(playAgainScreen_);
+  mgr.addScene(leftScreen_);
 
   mgr.showNextScene();
 }
@@ -96,6 +101,15 @@ function keyPressed() {
 // =============================================================
 // =                         BEGIN SCENES                      =
 // =============================================================
+function waitScreen_() {
+  this.setup = function() {
+    background('black');
+    image(wait_image, width / 2 - wait_image.width / 2, height / 2 - wait_image.height / 2);
+  }
+  this.draw = function () {
+    if (ready) mgr.showNextScene();
+  }
+}
 
 function titleScreen_() {
   this.setup = function() {
@@ -129,7 +143,8 @@ function descriptionScreen_() {
       if (secStatus > 0) secStatus -= 1;
     } else if (keyCode === RIGHT_ARROW) {
       if (secStatus < 9) secStatus += 1;
-      else mgr.showNextScene();
+      else if (!left) mgr.showNextScene();
+      else mgr.showScene(leftScreen_);
     }
 
   }
@@ -295,6 +310,19 @@ function playAgainScreen_() {
   }
 
   //this.draw = function() {}
+}
+
+function leftScreen_() {
+  this.setup = function() {
+    background('black');
+    image(left_image, width / 2 - left_image.width / 2, height / 2 - left_image.height / 2);
+  }
+  this.mousePressed = function() {
+    if (ready) mgr.showNextScene();
+  }
+  this.keyPressed = function() {
+    if (ready) mgr.showNextScene();
+  }
 }
 
 //==================================================================
