@@ -64,7 +64,7 @@ if (process.platform === "win32") { //Catch exit
   });
 }
 
-var PORT = "3000";
+var PORT = "8080";
 
 logData("starting at: " + d.toISOString());
 var server = app.listen(PORT, function(err) {
