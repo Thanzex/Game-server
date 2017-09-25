@@ -1,6 +1,22 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+//var ip = require('ip');
+
+/*
+fs.readFile('public/sketch.js', 'utf8', function (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  var result = data.replace(/var HOST = '.*'/g, "var HOST = '"+ip.address()+"';");
+
+  fs.writeFile('public/sketch.js', result, 'utf8', function (err) {
+     if (err) return console.log(err);
+  });
+});
+*/
+
+/*
 var logStream = fs.createWriteStream('logs/log.txt', {
   'flags': 'a',
   'autoClose': 'true'
@@ -26,12 +42,16 @@ playerStatsStream.on('error', function() {
     console.log("The file was saved!");
   });
 });
+*/
 var d = new Date();
 
-var playersDict = {
+var pair = {
   'player1': false,
   'player2': false
 };
+var pairs = [];
+
+var awaiting = false;
 
 if (process.platform === "win32") { //Catch exit
   var rl = require("readline").createInterface({
@@ -44,13 +64,13 @@ if (process.platform === "win32") { //Catch exit
   });
 }
 
-var HOST = 'localhost';
 var PORT = "3000";
 
 logData("starting at: " + d.toISOString());
-var server = app.listen(PORT, HOST, function(err) {
+var server = app.listen(PORT, function(err) {
   if (err) return console.log(err);
-  logData("Listening at http://" + HOST + ":" + PORT);
+  //process.exit(1);
+  logData("Listening at http://" +"localhost" + ":" + PORT);
 });
 
 app.use(express.static("public"));
@@ -60,55 +80,87 @@ logData("Server Running.");
 var socket = require('socket.io');
 var io = socket(server);
 
-io.set('heartbeat timeout', 2000);
-io.set('heartbeat interval', 1000);
+//io.set('heartbeat timeout', 2000);
+//io.set('heartbeat interval', 1000);
 
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket) {
-  if (playersDict.player1) playersDict.player2 = socket.id;
-  else playersDict.player1 = socket.id;
-  logData("New connection: " + ((playersDict.player1 == socket.id) ? 'player1' : 'player2'));
-
+  console.log('new connection! '+socket.id);
   socket.on('disconnect', function() {
-    if (socket.id == playersDict.player1) playersDict.player1 = false;
-    else playersDict.player2 = false;
-    resetGames();
-  });
+    var tosplice;
+    console.log('disconnected: '+socket.id);
+
+    if (awaiting == socket.id) awaiting = false;
+    else
+    {pairs.forEach(function(obj) {
+      Object.keys(obj).forEach(function(key) {
+        if (obj[key] == socket.id) {
+          console.log('erasing pair: '+JSON.stringify(obj));
+          socket.broadcast.to((key == 'player1')? obj['player2'] : obj['player1']).emit('left'); //Other disconnected
+          tosplice = pairs.indexOf(obj); //remove
+        }
+      });
+    });
+    pairs.splice(tosplice,1);}
+  });  //DISCONNECT
+
+  if (!awaiting) {awaiting = socket.id; console.log("New awaiting " + socket.id);}
+  else { socket.on('loaded', function() { socket.emit('ready'); });
+    console.log('creating pair '+ JSON.stringify({'player1' : awaiting, 'player2' : socket.id}));
+    pairs.push({'player1' : awaiting, 'player2' : socket.id});
+    socket.broadcast.to(awaiting).emit('ready');
+    awaiting = false;
+  }
+
   socket.on('selection', Message);
-  socket.on('stats', logStats);
+  //socket.on('stats', logStats);
 
   function Message(data) {
-    logData("Client " + ((playersDict.player1 == socket.id) ? 'player1' : 'player2') + "  sent data:  " + data.choice);
-    socket.broadcast.emit('selection', data);
-    logData("Broadcasting data...");
-    logStats(data);
+    var idToSend;
+
+     pairs.forEach(function(obj) {
+      //console.log("for obj in pairs : obj:" + JSON.stringify(obj));
+      Object.keys(obj).forEach(function(key) {
+        //console.log("object "+ JSON.stringify(obj) + ' key ' +key+' value: '+obj.key);
+        if (obj[key] == socket.id) {
+          //console.log('found pair in pairs');
+          var s = (key == 'player1')?'player2' : 'player1';
+        //  console.log(s);
+          idToSend = {'id' : obj[s] , 'p':s};
+        }
+      });
+    });
+    if (!idToSend) console.log("Invalid message.");
+    else
+    {
+      logData("Client " + idToSend.id + " " + idToSend.p + "  sent data:  " + data.choice);
+      socket.broadcast.to(idToSend.id).emit('selection', data);
+      logData("Broadcasting data...");}
   }
 
-  function logStats(data) {
-    d = new Date();
-    logData("Logging player data: " + data.choice);
-    playerStatsStream.write("\r\nPlayer: " + ((playersDict.player1 == socket.id) ? 'player1' : 'player2') + "\tAction:" + data.choice + "\t Time: " + d.toISOString());
-
-
-  }
+  // function logStats(data) {
+  //   d = new Date();
+  //   logData("Logging player data: " + data.choice);
+  //   //playerStatsStream.write("\r\nPlayer: " + ((playersDict.player1 == socket.id) ? 'player1' : 'player2') + "\tAction:" + data.choice + "\t Time: " + d.toISOString());
+  // }
 }
 
 function resetGames() {
   io.sockets.emit('reset', "disconnection");
   logData("Client disconnected, refreshing all windows...");
-  playerStatsStream.write("\r\nExiting.");
+  //playerStatsStream.write("\r\nExiting.");
 }
 
 process.on('SIGINT', function() {
   server.close();
   d = new Date();
   logData("Exiting at: " + d.toISOString());
-  playerStatsStream.write("\r\nExiting.");
+  //playerStatsStream.write("\r\nExiting.");
   process.exit();
 });
 
 function logData(data) {
   console.log(data);
-  logStream.write("\r\n" + data);
+  //logStream.write("\r\n" + data);
 }

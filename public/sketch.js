@@ -16,8 +16,17 @@ var otherPlayerCompleted = false;
 var otherChoice;
 var choice;
 var end;
+var ready = false,left = false;
 
-var HOST = 'localhost';
+
+socket = io();
+socket.on('ready', function() { ready = true; console.log('ready.');});
+socket.on('left', function() { left = true; console.log('Othe left.');});
+socket.on('selection', waitForYou); //selection event trigger
+socket.on('reset', function() {
+  location.reload();
+}); //reset event trigger function
+socket.on('reconnect', function() { console.log('reconnected'); socket.emit('loaded');})
 
 var symbolSize = 24;
 var streams = [];
@@ -28,7 +37,7 @@ let padToFour = number => number <= 9999 ? ("000" + number).slice(-4) : number;
 function preload() {
 
   titleFont = loadFont("/fonts/EUROS3.ttf");
-  normalFont = loadFont("/fonts/simhei.ttf");
+  //normalFont = loadFont("/fonts/simhei.ttf");
 
   readyImg = loadImage('assets/images/READY.jpeg');
   selectionImage = loadImage('assets/images/selection_screen.png');
@@ -47,6 +56,8 @@ function preload() {
 var fps = 30;
 
 function setup() {
+  socket.emit('loaded');
+  console.log('LOADED');
   frameRate(fps);
 
   for (var i = 0; i < 10; i++) {
@@ -60,16 +71,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
   fill(255);
-  //Connection to the server
-  socket = io.connect("http://" + HOST + ":3000"); //open connection
-  socket.on('selection', waitForYou); //selection event trigger
-  socket.on('reset', function() {
-    location.reload();
-  }); //reset event trigger function
-
-
   mgr = new SceneManager();
 
+  mgr.addScene(waitingScreen_);
   mgr.addScene(titleScreen_);
   mgr.addScene(descriptionScreen_);
   mgr.addScene(readyScreen_);
@@ -77,6 +81,7 @@ function setup() {
   mgr.addScene(waitScreen_);
   mgr.addScene(resultScreen_);
   mgr.addScene(playAgainScreen_);
+  mgr.addScene(leftScreen_);
 
   mgr.showNextScene();
 }
@@ -96,6 +101,21 @@ function keyPressed() {
 // =============================================================
 // =                         BEGIN SCENES                      =
 // =============================================================
+function waitingScreen_() {
+  this.setup = function() {
+    background('black');
+    //image(wait_image, width / 2 - wait_image.width / 2, height / 2 - wait_image.height / 2);
+    textSize(50);
+    textFont(titleFont);
+    textStyle(BOLD);
+    fill('white');
+    textAlign(CENTER);
+    text("WAITING FOR SECOND PLAYER", width / 2, height / 2);
+  }
+  this.draw = function () {
+    if (ready) mgr.showNextScene();
+  }
+}
 
 function titleScreen_() {
   this.setup = function() {
@@ -129,7 +149,8 @@ function descriptionScreen_() {
       if (secStatus > 0) secStatus -= 1;
     } else if (keyCode === RIGHT_ARROW) {
       if (secStatus < 9) secStatus += 1;
-      else mgr.showNextScene();
+      else if (!left) mgr.showNextScene();
+      else mgr.showScene(leftScreen_);
     }
 
   }
@@ -229,13 +250,15 @@ function selectionScreen_() {
       //SILENT
       sendSelection('silent');
       choice = 'silent'
-      if (!otherPlayerCompleted) mgr.showNextScene();
+      if (left) mgr.showScene(leftScreen_);
+      else if (!otherPlayerCompleted) mgr.showNextScene();
       else mgr.showScene(resultScreen_);
     } else if (keyCode === RIGHT_ARROW) {
       //TALK
       sendSelection('talk');
       choice = 'talk'
-      if (!otherPlayerCompleted) mgr.showNextScene();
+      if (left) mgr.showScene(leftScreen_);
+      else if (!otherPlayerCompleted) mgr.showNextScene();
       else mgr.showScene(resultScreen_);
     }
   }
@@ -254,6 +277,7 @@ function waitScreen_() {
       console.log("Done");
       mgr.showNextScene();
     }
+    else if (left) mgr.showScene(leftScreen_);
   }
 }
 
@@ -295,6 +319,25 @@ function playAgainScreen_() {
   }
 
   //this.draw = function() {}
+}
+
+function leftScreen_() {
+  this.setup = function() {
+    background('black');
+    //image(left_image, width / 2 - left_image.width / 2, height / 2 - left_image.height / 2);
+    textSize(50);
+    textFont(titleFont);
+    textStyle(BOLD);
+    fill('white');
+    textAlign(CENTER);
+    text("The other player left.", width / 2, height / 2);
+  }
+  this.mousePressed = function() {
+    mgr.showScene(playAgainScreen_);
+  }
+  this.keyPressed = function() {
+    mgr.showScene(playAgainScreen_);
+  }
 }
 
 //==================================================================
