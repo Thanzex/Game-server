@@ -1,165 +1,90 @@
 
-starting at: 2017-09-21T16:58:22.567Z
+starting at: 2017-09-22T13:07:53.595Z
 Server Running.
 Listening at http://localhost:3000
-New connection: Vf7atHBOr0mdi5v9AAAA
-New connection: e9uIXhNYMz4Zh1BfAAAB
-New connection: uZuKl9zup3J5oY21AAAC
-Logging player data: [object Object]
-Logging player data: [object Object]
-New connection: 1zWYQ4g3OyCKNTFlAAAD
-Logging player data: [object Object]
-Logging player data: [object Object]
-Logging player data: [object Object]
-Logging player data: [object Object]
-Client uZuKl9zup3J5oY21AAAC  sent data:  silent
-Broadcasting data...
-Logging player data: [object Object]
-Client 1zWYQ4g3OyCKNTFlAAAD  sent data:  silent
-Broadcasting data...
-Logging player data: [object Object]
-<<<<<<< HEAD
-New connection: jZeimgOvOUU5JS-oAAAE
-Logging player data: [object Object]
-Logging player data: [object Object]
-New connection: vf6ZYdUgXK4TGw-2AAAF
-Logging player data: [object Object]
-Logging player data: [object Object]
-New connection: MlQybKXlqBt9g8xSAAAG
-Logging player data: [object Object]
-Logging player data: [object Object]
-New connection: 7AFdhqbDk35fiV1rAAAH
-Logging player data: [object Object]
-Logging player data: [object Object]
-Logging player data: [object Object]
-Logging player data: [object Object]
-Client MlQybKXlqBt9g8xSAAAG  sent data:  talk
-Broadcasting data...
-Logging player data: [object Object]
-Client 7AFdhqbDk35fiV1rAAAH  sent data:  silent
-Broadcasting data...
-Logging player data: [object Object]
-New connection: QuLUmk2aPTs054WpAAAI
-Logging player data: [object Object]
-Logging player data: [object Object]
-Exiting at: 2017-09-21T17:20:54.721Z
-starting at: 2017-09-21T17:20:58.974Z
-Server Running.
-Listening at http://localhost:3000
-New connection: 9TAmFsZE4uD_4I0_AAAA
-New connection: x2_H46Q7PUv2_fhOAAAB
-Logging player data: Description start
-Logging player data: Ready screen
-Exiting at: 2017-09-21T18:25:47.304Z
-starting at: 2017-09-21T18:43:49.204Z
-Server Running.
-Listening at http://localhost:3000
-New connection: nRkUECBbfSAH9tL-AAAA
-Logging player data: Description start
-Logging player data: Ready screen
-New connection: gUS2fQFgS58OfTjXAAAB
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-Logging player data: Chose ready.
-Client gUS2fQFgS58OfTjXAAAB  sent data:  talk
+New connection: player1
+Logging player data: Deciding.
+New connection: player2
+Logging player data: Deciding.
+Client player1  sent data:  talk
 Broadcasting data...
 Logging player data: talk
-Client nRkUECBbfSAH9tL-AAAA  sent data:  talk
-Broadcasting data...
-Logging player data: talk
-New connection: lqWcb5ljuzIqcGBGAAAC
-Logging player data: Description start
-Logging player data: Ready screen
-New connection: XOajvs_1YgL1TQnyAAAD
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-Client XOajvs_1YgL1TQnyAAAD  sent data:  silent
+Client player2  sent data:  silent
 Broadcasting data...
 Logging player data: silent
-Logging player data: Chose ready.
-Client lqWcb5ljuzIqcGBGAAAC  sent data:  talk
-Broadcasting data...
-Logging player data: talk
-New connection: kiSYyVmZ1TtlhaJCAAAE
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-Client kiSYyVmZ1TtlhaJCAAAE  sent data:  silent
+Client disconnected, refreshing all windows...
+Client disconnected, refreshing all windows...
+New connection: player1
+Logging player data: Deciding.
+New connection: player2
+Logging player data: Deciding.
+Client player1  sent data:  silent
 Broadcasting data...
 Logging player data: silent
-New connection: fRrrdLF2oEqhm1IAAAAF
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-Client fRrrdLF2oEqhm1IAAAAF  sent data:  talk
+Client player2  sent data:  silent
+Broadcasting data...
+Logging player data: silent
+Client disconnected, refreshing all windows...
+Client disconnected, refreshing all windows...
+New connection: player1
+Logging player data: Deciding.
+Client disconnected, refreshing all windows...
+New connection: player1
+Logging player data: Deciding.
+New connection: player2
+Logging player data: Deciding.
+Client disconnected, refreshing all windows...
+Client disconnected, refreshing all windows...
+New connection: player1
+New connection: player2
+Logging player data: Deciding.
+Logging player data: Deciding.
+Client player1  sent data:  talk
 Broadcasting data...
 Logging player data: talk
-New connection: POtCRUsaENxbSuBrAAAG
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-New connection: XwzlJDJ-IJ2aUWjxAAAH
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-Exiting at: 2017-09-21T19:21:31.014Z
-=======
-starting at: 2017-09-21T18:51:00.188Z
+Client player2  sent data:  silent
+Broadcasting data...
+Logging player data: silent
+Client disconnected, refreshing all windows...
+Client disconnected, refreshing all windows...
+New connection: player1
+Logging player data: Deciding.
+New connection: player2
+Logging player data: Deciding.
+Client disconnected, refreshing all windows...
+Client disconnected, refreshing all windows...
+New connection: player1
+Logging player data: Deciding.
+New connection: player2
+Logging player data: Deciding.
+Exiting at: 2017-09-22T15:11:57.379Z
+starting at: 2017-09-22T15:12:59.957Z
 Server Running.
 Listening at http://localhost:3000
-New connection: oZ5l5sp44IYyppREAAAA
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-Client oZ5l5sp44IYyppREAAAA  sent data:  talk
+New connection: player1
+Client disconnected, refreshing all windows...
+New connection: player1
+New connection: player2
+Logging player data: Deciding.
+Logging player data: Deciding.
+Client player1  sent data:  silent
 Broadcasting data...
-Logging player data: talk
-New connection: PaKCl73VE-LSFsiRAAAB
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-Client PaKCl73VE-LSFsiRAAAB  sent data:  talk
+Logging player data: silent
+Client player2  sent data:  silent
 Broadcasting data...
-Logging player data: talk
-New connection: KTZ58TAg1SFY0BOuAAAC
-Logging player data: Description start
-Logging player data: Ready screen
-New connection: QBGo9P3p2iLojA8IAAAD
-Logging player data: Description start
-Logging player data: Ready screen
-New connection: 1hhf30af_AphTG54AAAE
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose not ready.
-Logging player data: Chose ready.
-New connection: o7MYV4GYYGer540KAAAF
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-New connection: vScYv6c2FgYI_5NuAAAG
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-New connection: P4IgxIXwLaKm0cHfAAAH
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-New connection: QTnmFWasIR7qW_tKAAAI
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-New connection: wX1WiKqClrHXUILYAAAJ
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-New connection: 0FnNEcFS5CMleACuAAAK
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
-New connection: e5Hc1B4la7CapLTxAAAL
-Logging player data: Description start
-Logging player data: Ready screen
-Logging player data: Chose ready.
->>>>>>> 395149e512d80c97676e7da1b6fad5dbfdd67874
+Logging player data: silent
+Client disconnected, refreshing all windows...
+Client disconnected, refreshing all windows...
+New connection: player1
+New connection: player2
+Logging player data: Deciding.
+Logging player data: Deciding.
+Client disconnected, refreshing all windows...
+Client disconnected, refreshing all windows...
+starting at: 2017-09-23T07:44:52.487Z
+Server Running.
+Listening at http://localhost:3000
+New connection: player1
+Logging player data: Deciding.
+Client disconnected, refreshing all windows...
+Exiting at: 2017-09-23T20:44:57.826Z

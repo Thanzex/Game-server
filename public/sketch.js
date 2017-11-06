@@ -18,7 +18,7 @@ var choice;
 var end;
 var ready = false,left = false;
 
-
+var cl = new cloudinary.Cloudinary({cloud_name: "thanzex"});
 socket = io();
 socket.on('ready', function() { ready = true; console.log('ready.');});
 socket.on('left', function() { left = true; console.log('Othe left.');});
@@ -26,6 +26,7 @@ socket.on('selection', waitForYou); //selection event trigger
 socket.on('reset', function() {
   location.reload();
 }); //reset event trigger function
+socket.on('invalid', function() { mgr.showScene(leftScreen_);})
 socket.on('reconnect', function() { console.log('reconnected'); socket.emit('loaded');})
 
 var symbolSize = 24;
@@ -39,17 +40,17 @@ function preload() {
   titleFont = loadFont("/fonts/EUROS3.ttf");
   //normalFont = loadFont("/fonts/simhei.ttf");
 
-  readyImg = loadImage('assets/images/READY.jpeg');
-  selectionImage = loadImage('assets/images/selection_screen.png');
-  welcome_image = loadImage('assets/images/welcome_screen_new.jpg');
-  knowYourFateImage = loadImage('assets/images/waiting_screen.jpeg');
-  playAgainImage = loadImage('assets/images/playagain_screen.jpeg');
+  readyImg = loadImage('http://res.cloudinary.com/thanzex/image/upload/v1509371141/READY_rukn8p.jpg');//loadImage('assets/images/READY.jpeg');
+  selectionImage = loadImage('http://res.cloudinary.com/thanzex/image/upload/v1509371141/selection_screen_xoe0s1.png');//loadImage('assets/images/selection_screen.png');
+  welcome_image = loadImage('http://res.cloudinary.com/thanzex/image/upload/v1509371141/welcome_screen_new_kixlnx.jpg');//loadImage('assets/images/welcome_screen_new.jpg');
+  knowYourFateImage = loadImage('http://res.cloudinary.com/thanzex/image/upload/v1509371141/waiting_screen_rmmma6.jpg');//loadImage('assets/images/waiting_screen.jpeg');
+  playAgainImage = loadImage('http://res.cloudinary.com/thanzex/image/upload/v1509371140/playagain_screen_qg4vxc.jpg');//loadImage('assets/images/playagain_screen.jpeg');
 
-  for (var i = 0; i < 10; i++) {
-    descriptionImages[i] = loadImage("assets/images/" + padToFour(i + 2) + ".jpg");
+  for (var i = 0; i < 10; i++) { // 2 - 11
+    descriptionImages[i] = loadImage(cl.url(padToFour(i + 2)+ ".jpg"));//loadImage("assets/images/" + padToFour(i + 2) + ".jpg");
   }
-  for (var i = 0; i < 8; i++) {
-    resultImages[i] = loadImage("assets/images/" + padToFour(i + 16) + ".jpg")
+  for (var i = 0; i < 8; i++) { // 16 - 23
+    resultImages[i] = loadImage(cl.url(padToFour(i + 16)+ ".jpg"));//loadImage("assets/images/" + padToFour(i + 16) + ".jpg")
   }
 }
 
