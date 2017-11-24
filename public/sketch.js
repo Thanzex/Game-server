@@ -105,13 +105,13 @@ function keyPressed() {
 function waitingScreen_() {
   this.setup = function() {
     background('black');
-    //image(wait_image, width / 2 - wait_image.width / 2, height / 2 - wait_image.height / 2);
-    textSize(50);
-    textFont(titleFont);
-    textStyle(BOLD);
-    fill('white');
-    textAlign(CENTER);
-    text("WAITING FOR SECOND PLAYER", width / 2, height / 2);
+    image(wait_image, width / 2 - wait_image.width / 2, height / 2 - wait_image.height / 2);
+    //textSize(50);
+    //textFont(titleFont);
+    //textStyle(BOLD);
+    //fill('white');
+    //textAlign(CENTER);
+    //text("WAITING FOR SECOND PLAYER", width / 2, height / 2);
   }
   this.draw = function () {
     if (ready) mgr.showNextScene();
