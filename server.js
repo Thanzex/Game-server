@@ -1,51 +1,9 @@
 var express = require('express');
 var app = express();
-var fs = require('fs');
 
 var users = 0;
 var numpairs =0;
-//var ip = require('ip');
 
-/*
-fs.readFile('public/sketch.js', 'utf8', function (err,data) {
-  if (err) {
-    return console.log(err);
-  }
-  var result = data.replace(/var HOST = '.*'/g, "var HOST = '"+ip.address()+"';");
-
-  fs.writeFile('public/sketch.js', result, 'utf8', function (err) {
-     if (err) return console.log(err);
-  });
-});
-*/
-
-/*
-var logStream = fs.createWriteStream('logs/log.txt', {
-  'flags': 'a',
-  'autoClose': 'true'
-});
-logStream.on('error', function() {
-  console.log("Log file not present, creating...");
-  fs.writeFile("logs/log.txt", "", function(err) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log("The file was saved!");
-  });
-});
-var playerStatsStream = fs.createWriteStream('logs/players.txt', {
-  'flags': 'a'
-});
-playerStatsStream.on('error', function() {
-  console.log("Player file not present, creating...");
-  fs.writeFile("logs/players.txt", "", function(err) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log("The file was saved!");
-  });
-});
-*/
 var d = new Date();
 
 var pair = {
@@ -153,15 +111,8 @@ function newConnection(socket) {
     {
       logData("Client " + idToSend.id + " " + idToSend.p + "  sent data:  " + data.choice);
       socket.broadcast.to(idToSend.id).emit('selection', data);
-      //logData("Broadcasting data...");
     }
   }
-
-  // function logStats(data) {
-  //   d = new Date();
-  //   logData("Logging player data: " + data.choice);
-  //   //playerStatsStream.write("\r\nPlayer: " + ((playersDict.player1 == socket.id) ? 'player1' : 'player2') + "\tAction:" + data.choice + "\t Time: " + d.toISOString());
-  // }
 }
 
 function resetGames() {
