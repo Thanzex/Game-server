@@ -2,3 +2,6 @@ logs/
 
 logs/log.txt
 public/assets/images/Thumbs.db
+public/.DS_Store
+npm-debug.log
+*.DS_Store
