@@ -29,7 +29,7 @@ socket.on('reset', function() {
 socket.on('invalid', function() { mgr.showScene(leftScreen_);})
 socket.on('reconnect', function() { console.log('reconnected'); socket.emit('loaded');})
 
-var symbolSize = 24;
+var symbolSize = 30;
 var streams = [];
 
 let padToFour = number => number <= 9999 ? ("000" + number).slice(-4) : number;
@@ -224,7 +224,7 @@ function selectionScreen_() {
 
   function Stream_() {
     this.symbols = [];
-    this.totalSymbols = round(height / 24);
+    this.totalSymbols = round(height / (symbolSize*2));
     this.speed = random(6, 18);
 
     this.generateSymbols = function(x, y) {

@@ -39,14 +39,10 @@ app.use(express.static("public"));
 logData("Server Running.");
 logData('Resetting all instances.')
 
-
 var socket = require('socket.io');
 var io = socket(server);
 
 io.emit('reset');
-
-//io.set('heartbeat timeout', 2000);
-//io.set('heartbeat interval', 1000);
 
 io.sockets.on('connection', newConnection);
 
